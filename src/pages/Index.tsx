@@ -1,15 +1,49 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AuthHeader } from "@/components/AuthHeader";
 import { PostFeed } from "@/components/PostFeed";
 import { TimelineView } from "@/components/TimelineView";
 import { posts, timelineEvents } from "@/data/mockData";
 import { useAuth } from "@/contexts/AuthContext";
 import { Navigate } from "react-router-dom";
+import { toast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("all");
   const { user, isLoading } = useAuth();
+  const [profileLoaded, setProfileLoaded] = useState(false);
+
+  // Check user profile on load to validate data access
+  useEffect(() => {
+    if (user) {
+      const checkProfile = async () => {
+        try {
+          const { data, error } = await supabase
+            .from("profiles")
+            .select("*")
+            .eq("id", user.id)
+            .single();
+            
+          if (error) {
+            console.error("Error fetching profile:", error);
+            toast({
+              title: "Data access issue",
+              description: "There was a problem accessing your profile data. Please try signing out and back in.",
+              variant: "destructive",
+            });
+          } else {
+            console.log("Profile loaded successfully:", data);
+            setProfileLoaded(true);
+          }
+        } catch (error) {
+          console.error("Profile check error:", error);
+        }
+      };
+      
+      checkProfile();
+    }
+  }, [user]);
 
   // Show loading state while checking authentication
   if (isLoading) {
