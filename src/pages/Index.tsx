@@ -1,12 +1,29 @@
 
 import { useState } from "react";
-import { Header } from "@/components/Header";
+import { AuthHeader } from "@/components/AuthHeader";
 import { PostFeed } from "@/components/PostFeed";
 import { TimelineView } from "@/components/TimelineView";
 import { posts, timelineEvents } from "@/data/mockData";
+import { useAuth } from "@/contexts/AuthContext";
+import { Navigate } from "react-router-dom";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("all");
+  const { user, isLoading } = useAuth();
+
+  // Show loading state while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  // Redirect to auth page if not authenticated
+  if (!user) {
+    return <Navigate to="/auth" />;
+  }
 
   const getOfficialPosts = () => posts.filter(
     (post) => post.verificationStatus === "official"
@@ -23,7 +40,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+      <AuthHeader activeTab={activeTab} setActiveTab={setActiveTab} />
       
       <main className="flex-1 container max-w-6xl mx-auto py-6 px-4">
         {activeTab === "all" && (
