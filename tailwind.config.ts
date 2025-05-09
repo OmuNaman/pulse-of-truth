@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,23 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Custom theme colors for our warzone intel app
+				verified: {
+					DEFAULT: '#2E7D32', // Deep green for verified content
+					light: '#4CAF50',
+				},
+				unverified: {
+					DEFAULT: '#FFA000', // Amber for unverified content
+					light: '#FFB74D',
+				},
+				warning: {
+					DEFAULT: '#D32F2F', // Red for potentially false content
+					light: '#EF5350',
+				},
+				intelBlue: {
+					DEFAULT: '#0D47A1', // Deep blue for military/intel theming
+					light: '#1976D2',
 				}
 			},
 			borderRadius: {
@@ -84,13 +102,19 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				pulse: {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.5' },
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-slow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
 			}
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+
