@@ -63,7 +63,11 @@ export const AuthHeader = ({ activeTab, setActiveTab }: AuthHeaderProps) => {
                     variant={activeTab === tab.id ? "default" : "ghost"}
                     onClick={() => {
                       setActiveTab(tab.id);
-                      document.querySelector("button[data-state='open']")?.click();
+                      // Fix: Cast to HTMLElement to access click() method
+                      const sheetCloseButton = document.querySelector("button[data-state='open']");
+                      if (sheetCloseButton && sheetCloseButton instanceof HTMLElement) {
+                        sheetCloseButton.click();
+                      }
                     }}
                     className="justify-start"
                   >
