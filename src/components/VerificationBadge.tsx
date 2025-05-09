@@ -2,6 +2,7 @@
 import { VerificationType } from "../types";
 import { BadgeCheck, BadgeAlert, Flag, FlagOff } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"; // Import Tooltip components
 
 interface VerificationBadgeProps {
   type: VerificationType;
@@ -24,9 +25,9 @@ export const VerificationBadge = ({
         };
       case "verified-journalist":
         return {
-          icon: <BadgeCheck size={16} />,
+          icon: <BadgeCheck size={16} />, // Can use a slightly different icon or color later if needed
           text: "Verified Journalist",
-          className: "bg-verified-light text-white",
+          className: "bg-verified-light text-white", // Adjusted class name
         };
       case "unverified":
         return {
@@ -36,7 +37,7 @@ export const VerificationBadge = ({
         };
       case "disputed":
         return {
-          icon: <FlagOff size={16} />,
+          icon: <FlagOff size={16} />, // Icon for disputed
           text: "Disputed",
           className: "bg-warning text-white",
         };
@@ -44,17 +45,17 @@ export const VerificationBadge = ({
         return {
           icon: <Flag size={16} />,
           text: "Unknown",
-          className: "bg-gray-500 text-white",
+          className: "bg-gray-500 text-white", // Default grey
         };
     }
   };
 
   const { icon, text, className: badgeClassName } = getBadgeContent();
 
-  return (
+  const badgeContent = (
     <div
       className={cn(
-        "flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium",
+        "flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium", // Added padding
         badgeClassName,
         className
       )}
@@ -63,4 +64,20 @@ export const VerificationBadge = ({
       {showText && <span>{text}</span>}
     </div>
   );
+
+  // If showText is false, wrap the icon in a tooltip
+  if (!showText) {
+    return (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          {badgeContent}
+        </TooltipTrigger>
+        <TooltipContent side="top">
+          {text}
+        </TooltipContent>
+      </Tooltip>
+    );
+  }
+
+  return badgeContent;
 };

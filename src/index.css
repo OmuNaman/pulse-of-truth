@@ -95,19 +95,4 @@
   }
 }
 
-.verified-badge {
-  @apply bg-verified text-white px-2 py-0.5 rounded-md text-xs font-semibold;
-}
-
-.unverified-badge {
-  @apply bg-unverified text-white px-2 py-0.5 rounded-md text-xs font-semibold;
-}
-
-.warning-badge {
-  @apply bg-warning text-white px-2 py-0.5 rounded-md text-xs font-semibold;
-}
-
-.intel-blue-badge {
-  @apply bg-intelBlue text-white px-2 py-0.5 rounded-md text-xs font-semibold;
-}
-
+/* Replaced individual badge classes with reusable component */

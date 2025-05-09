@@ -17,8 +17,9 @@ export const AuthHeader = ({ activeTab, setActiveTab }: AuthHeaderProps) => {
   const tabs = [
     { id: "all", label: "All Sources" },
     { id: "verified", label: "Verified Only" },
-    { id: "timeline", label: "Timeline" },
+    // Removed Timeline tab
     { id: "trending", label: "Trending" },
+    { id: "fact-check", label: "Fact Checks" }, // Added Fact Check tab
   ];
 
   return (
@@ -36,6 +37,7 @@ export const AuthHeader = ({ activeTab, setActiveTab }: AuthHeaderProps) => {
                 key={tab.id}
                 variant={activeTab === tab.id ? "default" : "ghost"}
                 onClick={() => setActiveTab(tab.id)}
+                className={activeTab === tab.id ? "bg-intelBlue hover:bg-intelBlue/90 text-primary-foreground" : ""}
               >
                 {tab.label}
               </Button>
@@ -69,7 +71,7 @@ export const AuthHeader = ({ activeTab, setActiveTab }: AuthHeaderProps) => {
                         sheetCloseButton.click();
                       }
                     }}
-                    className="justify-start"
+                    className={cn("justify-start", activeTab === tab.id ? "bg-intelBlue hover:bg-intelBlue/90 text-primary-foreground" : "")}
                   >
                     {tab.label}
                   </Button>

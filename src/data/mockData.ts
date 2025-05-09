@@ -1,5 +1,5 @@
 
-import { Post, Source, TimelineEvent } from '../types';
+import { Post, Source, VerificationType, SourceType, FactCheck } from '../types';
 
 export const sources: Source[] = [
   {
@@ -216,68 +216,78 @@ export const posts: Post[] = [
       shares: 1254,
       comments: 567
     }
+  },
+   {
+    id: 'post-8',
+    content: 'Initial reports of airspace violation seem unfounded after checking with military contacts. Monitoring the situation.',
+    timestamp: '2025-05-09T14:00:00Z',
+    source: sources[4],
+    verificationStatus: 'verified-journalist',
+    trustScore: 87,
+    tags: ['verified-journalist', 'fact-check', 'airspace'],
+     engagement: {
+      likes: 550,
+      shares: 180,
+      comments: 70
+    }
+  },
+   {
+    id: 'post-9',
+    content: 'Rumours circulating about civilian casualties are FALSE. We have boots on the ground and have seen no evidence of this. Disinformation campaign likely.',
+    timestamp: '2025-05-09T14:45:00Z',
+    source: sources[3],
+    verificationStatus: 'verified-journalist',
+    trustScore: 89,
+    tags: ['verified-journalist', 'fact-check', 'disinformation'],
+     engagement: {
+      likes: 800,
+      shares: 300,
+      comments: 150
+    }
   }
 ];
 
-export const timelineEvents: TimelineEvent[] = [
+// Removed timelineEvents
+
+export const factChecks: FactCheck[] = [
   {
-    id: 'event-1',
-    title: 'Military Training Exercise Begins',
-    description: 'Indian Army begins planned training exercise near eastern border',
-    timestamp: '2025-05-09T09:15:00Z',
-    relatedPosts: ['post-1'],
-    verificationStatus: 'official',
-    location: {
-      lat: 28.5,
-      lng: 77.2,
-      name: 'Eastern Border'
-    }
-  },
-  {
-    id: 'event-2',
-    title: 'Pakistan Joint Exercises',
-    description: 'Pakistan Armed Forces complete joint exercises with allied nations',
-    timestamp: '2025-05-09T08:45:00Z',
-    relatedPosts: ['post-3'],
-    verificationStatus: 'official',
-    location: {
-      lat: 33.7,
-      lng: 73.1,
-      name: 'Training Grounds'
-    }
-  },
-  {
-    id: 'event-3',
-    title: 'False Reports of Conflict',
-    description: 'Ministry of Defence debunks false reports of conflict in northern region',
-    timestamp: '2025-05-09T10:30:00Z',
+    id: 'fc-1',
+    claim: 'Reports of large-scale conflict in the northern region.',
+    status: 'false',
+    explanation: 'Ministry of Defence has issued a clarification stating these reports are false and purely speculation.',
     relatedPosts: ['post-2'],
-    verificationStatus: 'official'
+    timestamp: '2025-05-09T10:45:00Z'
   },
-  {
-    id: 'event-4',
-    title: 'Journalist Confirms Routine Patrol',
-    description: 'War correspondent confirms military movements are routine patrols',
-    timestamp: '2025-05-09T11:20:00Z',
-    relatedPosts: ['post-4'],
-    verificationStatus: 'verified-journalist',
-    location: {
-      lat: 32.5,
-      lng: 74.8,
-      name: 'Contested Area'
-    }
+   {
+    id: 'fc-2',
+    claim: 'Claims of major troop movements indicating imminent war.',
+    status: 'partially-true',
+    explanation: 'While troop movements are occurring, verified journalists and military analysts confirm these are preparedness exercises, not offensive positioning.',
+    relatedPosts: ['post-5', 'post-7'],
+    timestamp: '2025-05-09T13:45:00Z'
   },
-  {
-    id: 'event-5',
-    title: 'Unverified Reports of Explosions',
-    description: 'Unverified social media reports claim explosions near border',
-    timestamp: '2025-05-09T13:05:00Z',
+   {
+    id: 'fc-3',
+    claim: 'Social media reports of explosions near the border.',
+    status: 'unverified',
+    explanation: 'Multiple unverified reports exist (e.g., post-6), but no official or verified journalist sources have confirmed actual explosions. Could be training noise or fabricated.',
     relatedPosts: ['post-6'],
-    verificationStatus: 'unverified',
-    location: {
-      lat: 34.1,
-      lng: 74.5,
-      name: 'Border Region'
-    }
+    timestamp: '2025-05-09T13:20:00Z'
+  },
+    {
+    id: 'fc-4',
+    claim: 'Airspace violation occurred near the border.',
+    status: 'false',
+    explanation: 'Verified journalist reports indicate initial rumours are unfounded after checking with military contacts (post-8).',
+    relatedPosts: ['post-8'],
+    timestamp: '2025-05-09T14:15:00Z'
+  },
+     {
+    id: 'fc-5',
+    claim: 'Civilian casualties reported near the conflict area.',
+    status: 'false',
+    explanation: 'Verified journalist on the ground debunks civilian casualty claims as likely disinformation (post-9).',
+    relatedPosts: ['post-9'],
+    timestamp: '2025-05-09T15:00:00Z'
   }
 ];

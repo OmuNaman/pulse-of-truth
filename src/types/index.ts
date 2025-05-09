@@ -38,16 +38,15 @@ export interface Post {
   };
 }
 
-export interface TimelineEvent {
+// Removed TimelineEvent interface
+
+export type FactCheckStatus = 'true' | 'false' | 'partially-true' | 'unverified';
+
+export interface FactCheck {
   id: string;
-  title: string;
-  description: string;
-  timestamp: string;
+  claim: string;
+  status: FactCheckStatus;
+  explanation: string;
   relatedPosts: string[]; // IDs of related posts
-  verificationStatus: VerificationType;
-  location?: {
-    lat: number;
-    lng: number;
-    name: string;
-  };
+  timestamp: string;
 }

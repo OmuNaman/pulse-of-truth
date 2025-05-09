@@ -1,5 +1,6 @@
 
 import { cn } from "@/lib/utils";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 interface TrustScoreProps {
   score: number;
@@ -14,11 +15,11 @@ export const TrustScore = ({
   showLabel = true,
   className,
 }: TrustScoreProps) => {
-  const getScoreColor = () => {
-    if (score >= 80) return "bg-verified";
-    if (score >= 60) return "bg-verified-light";
-    if (score >= 40) return "bg-unverified";
-    return "bg-warning";
+  const getScoreColorClass = () => {
+    if (score >= 80) return "bg-verified text-white";
+    if (score >= 60) return "bg-verified-light text-white"; // Adjusted class name based on tailwind.config
+    if (score >= 40) return "bg-unverified text-white";
+    return "bg-warning text-white";
   };
 
   const getSizeClasses = () => {
@@ -32,20 +33,36 @@ export const TrustScore = ({
     }
   };
 
-  return (
-    <div className={cn("flex flex-col items-center", className)}>
-      <div
-        className={cn(
-          "rounded-full flex items-center justify-center font-bold text-white",
-          getSizeClasses(),
-          getScoreColor()
-        )}
-      >
-        {score}
-      </div>
-      {showLabel && (
-        <span className="text-xs text-gray-500 mt-1">Trust Score</span>
+  const scoreElement = (
+    <div
+      className={cn(
+        "rounded-full flex items-center justify-center font-bold",
+        getSizeClasses(),
+        getScoreColorClass()
       )}
+    >
+      {score}
     </div>
+  );
+
+  if (showLabel) {
+    return (
+      <div className={cn("flex flex-col items-center", className)}>
+        {scoreElement}
+        <span className="text-xs text-muted-foreground mt-1">Trust Score</span> {/* Use muted-foreground */}
+      </div>
+    );
+  }
+
+  // If showLabel is false, wrap in tooltip for accessibility
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        {scoreElement}
+      </TooltipTrigger>
+      <TooltipContent side="top">
+        Trust Score: {score}
+      </TooltipContent>
+    </Tooltip>
   );
 };

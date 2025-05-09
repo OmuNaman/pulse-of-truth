@@ -24,16 +24,20 @@ export const UserMenu = () => {
     );
   }
 
+  // Use first two letters of email for fallback, handle potential null
   const initials = user.email
     ? user.email.substring(0, 2).toUpperCase()
-    : "??";
+    : user.user_metadata?.username
+      ? user.user_metadata.username.substring(0, 2).toUpperCase()
+      : "WI"; // Default fallback "WI" for WarzoneIntel
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10">
-            <AvatarImage src="" alt={user.email || ""} />
+            {/* Add src={user.user_metadata?.avatar_url} if avatars are implemented in Supabase */}
+            <AvatarImage src={user.user_metadata?.avatar_url || ""} alt={user.email || user.user_metadata?.username || "user"} />
             <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
         </Button>
@@ -41,7 +45,9 @@ export const UserMenu = () => {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel>
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{user.email}</p>
+            {/* Display username if available, otherwise email */}
+            <p className="text-sm font-medium leading-none">{user.user_metadata?.username || user.email}</p>
+            {user.user_metadata?.username && <p className="text-xs leading-none text-muted-foreground">{user.email}</p>} {/* Show email below username if both exist */}
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
